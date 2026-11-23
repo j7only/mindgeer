@@ -40,7 +40,7 @@
 <style>
 :root{
   --bg:#f4f1ea; --bg-alt:#ebe6db; --ink:#16181b; --ink-soft:#4a4d52; --ink-faint:#8a8b8c;
-  --rule:#d6d0c3; --accent:#b4452a; --accent-ink:#fff;
+  --rule:#d6d0c3; --logo-bg:transparent; --accent:#b4452a; --accent-ink:#fff;
   --serif:"Fraunces", Georgia, "Times New Roman", serif;
   --sans:"Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
   --max:1120px; --gutter:clamp(16px,4vw,40px);
@@ -48,12 +48,12 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#121315; --bg-alt:#1a1c1f; --ink:#ece8e0; --ink-soft:#b3b0a9; --ink-faint:#7d7b77;
-    --rule:#2c2e32; --accent:#e0714f; --accent-ink:#121315;
+    --rule:#2c2e32; --accent:#e0714f; --accent-ink:#121315; --logo-bg:#dcd7cc;
   }
 }
 :root[data-theme="dark"]{
   --bg:#121315; --bg-alt:#1a1c1f; --ink:#ece8e0; --ink-soft:#b3b0a9; --ink-faint:#7d7b77;
-  --rule:#2c2e32; --accent:#e0714f; --accent-ink:#121315;
+  --rule:#2c2e32; --accent:#e0714f; --accent-ink:#121315; --logo-bg:#dcd7cc;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
@@ -116,10 +116,12 @@ section.alt{background:var(--bg-alt)}
 
 /* experience */
 .clients{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule);margin-bottom:48px}
-.clients li{list-style:none;overflow-wrap:anywhere;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px 16px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);font-family:var(--serif);font-size:19px;font-weight:400;letter-spacing:-.005em;color:var(--ink-soft);transition:color .15s,background .15s}
-.clients li:hover{color:var(--ink);background:var(--bg-alt)}
-.clients li small{display:block;font-family:var(--sans);font-size:12px;color:var(--ink-faint);margin-top:4px}
-@media (max-width:800px){.clients{grid-template-columns:repeat(2,minmax(0,1fr))}.clients li{font-size:16px;min-height:76px}}
+.clients li{list-style:none;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px 18px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--logo-bg)}
+.clients img{display:block;height:var(--h);width:auto;max-width:100%;object-fit:contain;filter:grayscale(1) brightness(.62) contrast(1.5);opacity:.8;transition:filter .25s,opacity .25s}
+.clients li:hover img{filter:none;opacity:1}
+.clients .wordmark{font-family:var(--sans);font-weight:600;font-size:26px;letter-spacing:.02em;color:#3a3c40;opacity:.85}
+.clients li small{display:block;font-size:12px;line-height:1.45;color:#77756f;max-width:220px}
+@media (max-width:800px){.clients{grid-template-columns:repeat(2,minmax(0,1fr))}.clients li{min-height:120px;padding:20px 12px}.clients img{height:calc(var(--h) * .8)}.clients .wordmark{font-size:21px}}
 .exp-text{max-width:760px;font-size:clamp(18px,1.8vw,21px);color:var(--ink-soft);margin-left:auto}
 
 /* about */
@@ -138,11 +140,15 @@ section.alt{background:var(--bg-alt)}
 footer#contact{padding:clamp(72px,11vh,128px) 0 40px;background:var(--ink);color:var(--bg)}
 footer .big{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,96px);letter-spacing:-.03em;line-height:1;margin-bottom:48px}
 footer .big em{font-style:normal;color:var(--accent)}
-.contact-list{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:16px 56px;margin-bottom:96px}
+.contact-list{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:16px 56px;margin-bottom:80px}
 .contact-list .lbl{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin-bottom:6px}
 .contact-list a{font-size:clamp(18px,2vw,22px);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s,color .15s}
 .contact-list a:hover{color:var(--accent);border-color:var(--accent)}
 .legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;opacity:.55;border-top:1px solid color-mix(in srgb,var(--bg) 20%,transparent);padding-top:24px}
+.beyond{display:flex;align-items:center;gap:14px;margin-bottom:28px;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.beyond span{opacity:.45;margin-right:4px}
+.beyond img{display:block;width:30px;height:30px;border-radius:4px;object-fit:cover;filter:grayscale(1);opacity:.5;transition:filter .2s,opacity .2s}
+.beyond a:hover img{filter:none;opacity:1}
 @media (max-width:700px){.contact-list{grid-template-columns:1fr}}
 </style>
 </head>
@@ -242,26 +248,21 @@ footer .big em{font-style:normal;color:var(--accent)}
           <h2>Experience</h2>
         </div>
       </div>
-      <!-- Logo strip: placeholder wordmarks, to be replaced with approved client logos -->
       <ul class="clients" aria-label="Selected clients">
-        <li>Discovery</li>
-        <li>Eurosport</li>
-        <li>TLC</li>
-        <li>Cambridge Econometrics</li>
-        <li>Dyson</li>
-        <li>Európa Pont</li>
-        <li>European Commission</li>
-        <li><span>MTA<small>Hungarian Academy of Sciences</small></span></li>
-        <li>World Science Forum</li>
-        <li>Accor</li>
-        <li>Novotel</li>
-        <li>Mercure</li>
-        <li>TRIBE</li>
-        <li>ibis</li>
-        <li>Secfone</li>
-        <li>Átlátszó.hu</li>
+        <li><img src="logos/accor.png" alt="Accor" style="--h:65px" loading="lazy"><small>Novotel · Mercure · Mövenpick · TRIBE · ibis</small></li>
+        <li><img src="logos/discovery.png" alt="Discovery" style="--h:32px" loading="lazy"><small>Eurosport · TLC · Animal Planet</small></li>
+        <li><img src="logos/europa-pont.png" alt="Európa Pont" style="--h:38px" loading="lazy"></li>
+        <li><img src="logos/european-commission.png" alt="European Commission" style="--h:78px" loading="lazy"></li>
+        <li><img src="logos/mogotel.png" alt="Mogotel Hotel Group" style="--h:50px" loading="lazy"></li>
+        <li><img src="logos/mta.png" alt="Hungarian Academy of Sciences (MTA)" style="--h:80px" loading="lazy"></li>
+        <li><img src="logos/wsf.png" alt="World Science Forum Budapest" style="--h:26px" loading="lazy"></li>
+        <li><img src="logos/cambridge-econometrics.png" alt="Cambridge Econometrics" style="--h:34px" loading="lazy"></li>
+        <li><img src="logos/dyson.png" alt="Dyson" style="--h:44px" loading="lazy"></li>
+        <li><img src="logos/answear.png" alt="Answear" style="--h:34px" loading="lazy"></li>
+        <li><span class="wordmark">Navayo</span></li>
+        <li><img src="logos/neumann-labs.png" alt="Neumann Labs" style="--h:22px" loading="lazy"></li>
       </ul>
-      <p class="exp-text">Our consultants have delivered work for international brands, global agencies and major Hungarian institutions – including the international communication of four World Science Forums in Budapest – across financial services, telco, science, hospitality, retail and EU public communication.</p>
+      <p class="exp-text">Our consultants have delivered work for international brands, global agencies and major Hungarian institutions – including the international communication of four World Science Forums in Budapest, regional communication management for global hospitality and media groups, brand development for technology companies, and the Hungarian market entry communication of international retail brands – across financial services, telco, science, hospitality, retail, technology and EU public communication.</p>
     </div>
   </section>
 
@@ -296,6 +297,11 @@ footer .big em{font-style:normal;color:var(--accent)}
       <div><span class="lbl">Email</span><a href="mailto:move@mindgeer.com">move@mindgeer.com</a></div>
       <div><span class="lbl">Phone</span><a href="tel:+36303133450">+36 30 313 3450</a></div>
       <div><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/balintjanko/" target="_blank" rel="noopener">On LinkedIn ↗</a></div>
+    </div>
+    <div class="beyond">
+      <span>Beyond Mindgeer</span>
+      <a href="https://beyondthehit.substack.com/" target="_blank" rel="noopener" title="Beyond the Hit"><img src="logos/beyond-the-hit.png" alt="Beyond the Hit"></a>
+      <a href="https://clayfeet.bandcamp.com/" target="_blank" rel="noopener" title="Clayfeet"><img src="logos/clayfeet.png" alt="Clayfeet"></a>
     </div>
     <div class="legal">
       <span>© <span id="yr">2026</span> Mindgeer</span>
